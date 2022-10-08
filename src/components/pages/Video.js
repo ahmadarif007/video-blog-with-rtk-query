@@ -5,6 +5,7 @@ import Player from "../video/Player";
 import RelatedVideos from "../video/related/RelatedVideos";
 import Loading from "../ui/loaders/VideoLoader";
 import Error from "../ui/Error";
+import RelatedVideoLoader from "../ui/loaders/RelatedVideoLoader";
 
 export default function Video() {
     const { videoId } = useParams();
@@ -37,7 +38,13 @@ export default function Video() {
                         {content}
                     </div>
 
-                    <RelatedVideos />
+                    {video.id ? (
+                        <RelatedVideos />
+                    ) : isLoading ? (
+                        <RelatedVideoLoader />
+                    ) : (
+                        <Error message="There was an error!" />
+                    )}
                 </div>
             </div>
         </section>

@@ -8,7 +8,14 @@ export default function Videos() {
 
     let content = null;
     if (isLoading) {
-        content = <Loading />;
+        content = (
+            <>
+                <Loading />
+                <Loading />
+                <Loading />
+                <Loading />
+            </>
+        );
     }
     if (!isLoading && isError) {
         content = <Error message="There was an error!" />;
