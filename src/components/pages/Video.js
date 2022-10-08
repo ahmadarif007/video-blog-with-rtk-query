@@ -3,9 +3,10 @@ import { useGetVideoQuery } from "../../features/api/apiSlice";
 import Description from "../video/Description";
 import Player from "../video/Player";
 import RelatedVideos from "../video/related/RelatedVideos";
-import Loading from "../ui/loaders/VideoLoader";
 import Error from "../ui/Error";
 import RelatedVideoLoader from "../ui/loaders/RelatedVideoLoader";
+import DescriptionLoader from "../ui/loaders/DescriptionLoader";
+import PlayerLoader from "../ui/loaders/PlayerLoader";
 
 export default function Video() {
     const { videoId } = useParams();
@@ -13,15 +14,20 @@ export default function Video() {
 
     let content = null;
     if (isLoading) {
-        content = <Loading />;
+        content = (
+            <>
+                <PlayerLoader />
+                <DescriptionLoader />
+            </>
+        );
     }
     if (!isLoading && isError) {
         content = <Error message="There was an error!" />;
     }
-    if (!isLoading && !isError && !video.id) {
+    if (!isLoading && !isError && !video?.id) {
         content = <Error message="No video found!" />;
     }
-    if (!isLoading && !isError && video.id) {
+    if (!isLoading && !isError && video?.id) {
         content = (
             <>
                 <Player title={video.title} link={video.link} />
@@ -38,10 +44,14 @@ export default function Video() {
                         {content}
                     </div>
 
-                    {video.id ? (
-                        <RelatedVideos />
+                    {video?.id ? (
+                        <RelatedVideos id={video.id} title={video.title} />
                     ) : isLoading ? (
-                        <RelatedVideoLoader />
+                        <>
+                            <RelatedVideoLoader />
+                            <RelatedVideoLoader />
+                            <RelatedVideoLoader />
+                        </>
                     ) : (
                         <Error message="There was an error!" />
                     )}
