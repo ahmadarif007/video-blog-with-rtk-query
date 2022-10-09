@@ -33,6 +33,7 @@ export default function Form() {
         title: title,
         author: author,
         description: description,
+        link: link,
         thumbnail: thumbnail,
         date: date,
         duration: duration,
